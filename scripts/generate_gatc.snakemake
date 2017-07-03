@@ -1,0 +1,47 @@
+
+import os
+import re
+import inspect
+
+filename = inspect.getframeinfo(inspect.currentframe()).filename
+path = os.path.dirname(os.path.abspath(filename))
+
+
+print(config.keys())
+
+rule all:
+    input:
+        expand('%s/gatcFragments/{species}.gff' % config['outdir'],
+               species=config['genome'].keys())
+
+rule gff:
+    input:
+        '%s/gatcFragments/{species}_gatc_Mast.txt.gz' % config['outdir']
+    output:
+        '%s/gatcFragments/{species}.gff' % config['outdir']
+    params:
+        '{species}'
+    shell:
+        "gunzip -c {input} | tail -n+3 | awk '{{"
+        "   print $1\"\tGATC\texon\t\"$3\"\t\"$4"
+        "   \"\t.\t.\t.\tID=gene:{params}GATC\"$1\".\"NR }}'  > {output}"
+
+rule mast:
+    input:
+        genome=lambda wildcards: config['genome'][wildcards.species],
+        meme='%s/gatcFragments/GATC.meme' % config['outdir']
+    output:
+        '%s/gatcFragments/{species}_gatc_Mast.txt.gz' % config['outdir']
+    params:
+        mast=config['mast'],
+        meme='%s/meme' % config['outdir']
+    shell:
+        "{params.mast} {input.meme} {input.genome} -oc {params.meme} "
+        "              -norc -nostatus -nohtml -notext -hit_list -mt 0.004 | "
+        "gzip - > {output}"
+
+rule generate_gatc:
+    output:
+        '%s/gatcFragments/GATC.meme' % config['outdir']
+    shell:
+        "{path}/generate_gatc_meme.sh > {output}"

@@ -1,0 +1,7 @@
+outdir: '/home/NFS/users/c.leemans/data/denovo'
+
+mast: '/home/NFS/users/j.yanez/utils/meme/bin/mast'
+
+genome:
+    129S1_SvImJ: "/home/NFS/users/c.leemans/data/denovo/129S1_SvImJ.chromosomes.unplaced.gt2k.fa"
+    CAST_Eij: "/home/NFS/users/c.leemans/data/denovo/CAST_EiJ.chromosomes.unplaced.gt2k.fa"

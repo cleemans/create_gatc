@@ -1,0 +1,1 @@
+gunzip -c /home/NFS/users/c.leemans/data/denovo/gatcFragments/CAST_Eij_gatc_Mast.txt.gz | tail -n+3 | awk '{   print $1"	GATC	exon	"$3"	"$4   "	.	.	.	ID=gene:CAST_EijGATC"$1"."NR }'  > /home/NFS/users/c.leemans/data/denovo/gatcFragments/CAST_Eij.gff
