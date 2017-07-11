@@ -11,20 +11,21 @@ print(config.keys())
 
 rule all:
     input:
-        expand('%s/gatcFragments/{species}.gff' % config['outdir'],
+        expand('%s/gatcFragments/{species}.gff.gz' % config['outdir'],
                species=config['genome'].keys())
 
 rule gff:
     input:
-        '%s/gatcFragments/{species}_gatc_Mast.txt.gz' % config['outdir']
+        mast='%s/gatcFragments/{species}_gatc_Mast.txt.gz' % config['outdir'],
+        chromsizes=lambda wildcards: config['chromsizes'][wildcards.species]
     output:
-        '%s/gatcFragments/{species}.gff' % config['outdir']
+        '%s/gatcFragments/{species}.gff.gz' % config['outdir']
     params:
         '{species}'
     shell:
-        "gunzip -c {input} | tail -n+3 | awk '{{"
-        "   print $1\"\tGATC\texon\t\"$3\"\t\"$4"
-        "   \"\t.\t.\t.\tID=gene:{params}GATC\"$1\".\"NR }}'  > {output}"
+        "{path}/create_fragment.awk -v pattern='ID=gene:{params}GATC' "
+        "{input.chromsizes} <(gunzip -c {input.mast}) | "
+        "gzip -c - > {output}"
 
 rule mast:
     input:

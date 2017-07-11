@@ -1,0 +1,16 @@
+outdir: /home/NFS/users/c.leemans/data/
+
+mast: /home/NFS/users/j.yanez/utils/meme/bin/mast
+
+genome:
+    GRCm38_68: /home/NFS/users/c.leemans/data/GRCm38/GRCm38_68.fa
+    GRCh37: /home/NFS/users/c.leemans/data/GRCh37/Homo_sapiens.GRCh37.86.1-22XYMT_20151127.fa
+    mm9: /home/NFS/users/c.leemans/data/mm9/mm9_1-19_MXY_25072007.fa
+    hg19: /home/NFS/users/c.leemans/data/hg19/genome.fa
+
+
+chromsizes:
+    GRCm38_68: /home/NFS/users/c.leemans/data/GRCm38/GRCm38_68.chrom.sizes
+    GRCh37: /home/NFS/users/c.leemans/data/GRCh37/GRCh37.chrom.sizes
+    mm9: /home/NFS/users/c.leemans/data/mm9/mm9.chrom.sizes
+    hg19: /home/NFS/users/c.leemans/data/hg19/hg19.chrom.sizes
